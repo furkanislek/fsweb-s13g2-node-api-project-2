@@ -113,7 +113,7 @@ Bu projeyi forkladıktan sonra bilgisayarınıza klonlayın.
 - Eğer _comments_ ler döndürülemiyorsa:
 
   - HTTP `500` yanıtlar.
-  - Şu JSON'u döndürür: `{ message: "Yorumlar bilgisi getirilemedi" }`.
+  - Şu JSON'u döndürür: `{ message: "Girilen ID'li gönderi bulunamadı." }`.
 
 ### Veritabanı Kalıcılığı Yardımcıları
 

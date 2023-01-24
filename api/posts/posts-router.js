@@ -79,19 +79,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/comments", (req, res) => {
-  PM.findPostComments(req.params.id)
-    .then((post) => {
-      if (!post) {
-        res.status(404).json({ message: "Girilen ID'li gönderi bulunamadı." });
-      }
-      res
-        .status(200)
-        .json(post.map((res) => [{ post_id: res.post_id, text: res.text }]));
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Girilen ID'li gönderi bulunamadı." });
-    });
+router.get("/:id/comments", async (req, res) => {
+  try {
+    const postComment = await PM.findCommentById(req.params.id);
+
+    if (!postComment) {
+      res.status(404).json({ message: "Girilen ID'li gönderi bulunamadı." });
+    } else {
+      await PM.findPostComments(req.params.id).then((post) => {
+        res.json(post);
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Yorumlar bilgisi getirilemedi" });
+  }
 });
 
 module.exports = router;
